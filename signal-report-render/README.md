@@ -60,4 +60,4 @@ Edit the feed list, impact weights and filters in `news.js`. Edit layout in `pub
 
 ## Reading improvements
 
-Visited headlines change colour. Editions refresh automatically every five minutes while visible and whenever you return to the tab. Scroll position is preserved. Older stories lose ranking weight with an 18-hour half-life; the checked timestamp includes a date.
+Visited headlines change colour. New automatic editions wait behind a Show latest headlines button so stories do not move while you read. Manual refresh applies immediately. Footer navigation returns you to the top.

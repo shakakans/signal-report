@@ -9,6 +9,6 @@ const server=createServer(async(req,res)=>{
  if(path==='/api/news'){try{const data=await getNews();res.writeHead(200,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(data));}catch{res.writeHead(503,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'News sources are temporarily unavailable. Please retry shortly.'}));}return;}
  if(path==='/health'){res.writeHead(200);res.end('ok');return;}
  const file=files[path];if(!file){res.writeHead(404);res.end('Not found');return;}
- try{const content=await readFile(new URL('./public/'+file[0],import.meta.url));res.writeHead(200,{'Content-Type':file[1],'Cache-Control':'no-cache'});res.end(content);}catch{res.writeHead(500);res.end('Unable to load page');}
+ try{const content=await readFile(new URL('./public/'+file[0],import.meta.url));res.writeHead(200,{'Content-Type':file[1]});res.end(content);}catch{res.writeHead(500);res.end('Unable to load page');}
 });
 server.listen(Number(process.env.PORT)||3000,process.env.HOST||'0.0.0.0',()=>console.log(`The Signal Report: http://127.0.0.1:${Number(process.env.PORT)||3000}/`));

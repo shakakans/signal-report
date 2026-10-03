@@ -81,8 +81,7 @@ async function collect() {
             const published = tag(item, 'pubDate') || tag(item, 'published') || tag(item, 'updated');
             const age = (Date.now() - Date.parse(published)) / 3600000;
             const impact = severity.reduce((sum, [pattern, weight]) => sum + (pattern.test(title) ? weight : 0), 0);
-            const safeAge = Math.max(0, Number.isFinite(age) ? age : 72);
-            const score = impact * Math.pow(0.5, safeAge / 18) + 20 * Math.pow(0.5, safeAge / 12);
+            const score = impact + Math.max(0, 10 - (Number.isFinite(age) ? age : 48) / 2);
             return { title, url, source, published, category: classify(title, f.category), score, image, imageSource: image ? source : undefined, sources: [source], related: [] };
         }).filter(s => /^https?:\/\//.test(s.url) && s.title && Number.isFinite(Date.parse(s.published)) && (Date.now() - Date.parse(s.published)) < 72 * 3600000 && !low.test(s.title) && !/(?:commentisfree|opinion|podcast|\/live\/)/i.test(s.url) && (f.name !== 'Google News' || trustedGoogle.test(s.source)) && (f.name !== 'Ars Technica' || /\b(AI|artificial intelligence|machine learning|OpenAI|Anthropic|Nvidia|DeepSeek|data cent\w*|model)\b/i.test(s.title)) && severity.some(([pattern]) => pattern.test(s.title)));
     }));
@@ -99,7 +98,7 @@ async function collect() {
             if (!same.story.sources.includes(s.source)) {
                 same.story.sources.push(s.source);
                 if (s.title.toLowerCase() !== same.story.title.toLowerCase())
-                    same.story.score += 12 * Math.pow(0.5, Math.max(0, (Date.now() - Date.parse(same.story.published)) / 3600000) / 18);
+                    same.story.score += 12;
             }
             if (!same.story.image && s.image) {
                 same.story.image = s.image;
