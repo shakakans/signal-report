@@ -50,10 +50,14 @@ These are 22 feeds from 15 feed providers, not 20 independent publishers. Some f
 
 ## Selection and photos
 
-The server ranks recent headlines by consequence-related terms, recency and matching coverage from multiple sources. It groups similar headlines, filters common opinion and promotional content, and shows at most eight stories per section. This is heuristic ranking, not LLM curation or verification, and it cannot guarantee that nothing important is missed. BBC, Guardian and the other providers remain responsible for their reporting.
+The server ranks recent headlines by consequence-related terms, recency and matching coverage from multiple sources. It groups similar headlines, filters common opinion and promotional content, and shows up to 25 stories per section, with no pagination. This is heuristic ranking, not LLM curation or verification, and it cannot guarantee that nothing important is missed. BBC, Guardian and the other providers remain responsible for their reporting.
 
 Photos come from publisher feed metadata or article Open Graph metadata. They are linked to the original stories, with source attribution. Failed images are hidden. Article access may require a subscription. Photos and headlines remain the publishers' property; check their terms before operating a public or commercial service.
 
 Five-minute caching happens in memory. No stories are written to disk. Multiple simultaneous visitors reuse the same refresh. If all feeds fail after a successful refresh, previous headlines are shown with a stale-data notice. Nothing runs unattended while the server is asleep.
 
 Edit the feed list, impact weights and filters in `news.js`. Edit layout in `public/index.html` and `public/app.js`, styling in `public/style.css`. The `/health` endpoint is included for Render health checks.
+
+## Reading improvements
+
+Visited headlines change colour. New automatic editions wait behind a Show latest headlines button so stories do not move while you read. Manual refresh applies immediately. Footer navigation returns you to the top.
